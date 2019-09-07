@@ -73,6 +73,7 @@ let run = () => {
     if (frame^ == 0) {
       render(primaryWindow);
     }
+    Gc.full_major();
     incr(frame);
 
     glfwPollEvents();
