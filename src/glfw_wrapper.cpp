@@ -396,6 +396,13 @@ extern "C" {
         WindowInfo* wd = (WindowInfo *)window;
         glfwMakeContextCurrent(wd->pWindow);
         gladLoadGLES2Loader((GLADloadproc) glfwGetProcAddress);
+
+        glBindFramebuffer(GL_FRAMEBUFFER, 0);
+        //glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+        //glViewport(0, 0, 640, 800);
+        //glClearColor(1, 1, 1, 1);
+        glClearStencil(0);
+        glClear(GL_COLOR_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
         return Val_unit;
     }
 
