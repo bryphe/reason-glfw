@@ -1,3 +1,3 @@
 open EsyGlfwExamples;
 
-Lwt_main.run(Basic.run());
+Basic.run();

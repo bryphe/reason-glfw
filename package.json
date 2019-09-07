@@ -11,13 +11,6 @@
         "build",
         "--root",
         "."
-      ],
-      [
-        "dune",
-        "build",
-        "--root",
-        ".",
-        "./bin_js/test_glfw.bc.js"
       ]
     ],
     "install": [
@@ -25,25 +18,26 @@
     ]
   },
   "peerDependencies": {
-    "ocaml": "^4.6.0"
+    "ocaml": "~4.7.0"
   },
   "dependencies": {
     "@opam/dune": "*",
     "@esy-ocaml/reason": "^3.3.7",
     "refmterr": "^3.1.0",
-    "@opam/js_of_ocaml": "^3.3.0",
-    "@opam/js_of_ocaml-compiler": "^3.3.0",
-    "@opam/js_of_ocaml-lwt": "^3.3.0",
-    "@opam/lwt": "^4.0.0",
-    "@opam/lwt_ppx": "^1.1.0",
     "esy-glfw": "^3.2.1008",
-    "esy-cmake": "^0.3.4",
-    "reason-gl-matrix": "^0.9.9305"
+    "esy-cmake": "*",
+    "reason-skia": "*"
   },
   "resolutions": {
-    "@opam/cmdliner": "1.0.2"
+    "@opam/ppx_tools_versioned": "5.2.2",
+    "@opam/cmdliner": "1.0.2",
+    "esy-cmake": "github:prometheansacrifice/esy-cmake#2a47392def755074afbf63eb794b94135476b1d1",
+    "reason-skia": "link:../reason-skia",
+    "@opam/ocaml-migrate-parsetree": "1.1.0",
+    "yarn-pkg-config": "esy-ocaml/yarn-pkg-config#34947ac97f898c8a94b1731df45aea16f8fc7b3c",
+    "@esy-ocaml/libffi": "esy-ocaml/libffi#599bc3567ecf839240977b6d9aaf0b80f983b5aa"
   },
   "devDependencies": {
-    "ocaml": "^4.6.0"
+    "ocaml": "~4.7.0"
   }
 }
