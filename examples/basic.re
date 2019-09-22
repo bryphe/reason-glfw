@@ -57,8 +57,39 @@ let run = () => {
   glfwSwapInterval(0);
 
   let render = window => {
+    open Skia;
     glfwMakeContextCurrent(window);
-    let _ = Skia.imported_draw_gpu();
+    print_endline("Here");
+    let width = 640;
+    let height = 480;
+    let glContext = Skia.Gr.Context.makeGl(None);
+    switch (glContext) {
+    | None => prerr_endline ("No context");
+    | Some(glContext) => 
+      let framebufferInfo = Gr.Gl.FramebufferInfo.make(Unsigned.UInt.of_int(0), Unsigned.UInt.of_int(0x8058));
+      let backendRenderTarget  = Gr.BackendRenderTarget.makeGl(width, height, 0, 8, framebufferInfo);
+      let surfaceProps = SurfaceProps.make(Unsigned.UInt32.of_int(0), Unknown);
+      
+      switch(Surface.makeFromBackendRenderTarget(glContext, backendRenderTarget, TopLeft, Rgba8888, None, Some(surfaceProps))) {
+      | None => prerr_endline("NO surface");
+      | Some(surface) =>
+        print_endline ("Trying to draw....");
+        let canvas = Surface.getCanvas(surface);
+          let fill = Paint.make();
+          Paint.setColor(fill, Color.makeArgb(0xFF, 0x00, 0x00, 0xFF));
+          Canvas.drawPaint(canvas, fill);
+
+          Paint.setColor(fill, Color.makeArgb(0xFF, 0x00, 0xFF, 0xFF));
+          let rect = Rect.makeLtrb(100., 100., 540., 380.);
+          Canvas.drawRect(canvas, rect, fill);
+
+          Canvas.flush(canvas);
+        }
+    }
+    /*switch (ctx) {
+    | None => prerr_endline ("No context");
+    | Some(_) => prerr_endline ("Got context");
+    }*/
     glfwSwapBuffers(window);
   };
 
