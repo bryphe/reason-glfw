@@ -68,28 +68,35 @@ let run = () => {
     | Some(glContext) => 
       let framebufferInfo = Gr.Gl.FramebufferInfo.make(Unsigned.UInt.of_int(0), Unsigned.UInt.of_int(0x8058));
       let backendRenderTarget  = Gr.BackendRenderTarget.makeGl(width, height, 0, 8, framebufferInfo);
-      let surfaceProps = SurfaceProps.make(Unsigned.UInt32.of_int(0), Unknown);
+      let surfaceProps = SurfaceProps.make(Unsigned.UInt32.of_int(0), RgbH);
       
-      switch(Surface.makeFromBackendRenderTarget(glContext, backendRenderTarget, TopLeft, Rgba8888, None, Some(surfaceProps))) {
+      switch(Surface.makeFromBackendRenderTarget(glContext, backendRenderTarget, BottomLeft, Rgba8888, None, Some(surfaceProps))) {
       | None => prerr_endline("NO surface");
       | Some(surface) =>
         print_endline ("Trying to draw....");
         let canvas = Surface.getCanvas(surface);
           let fill = Paint.make();
-          Paint.setColor(fill, Color.makeArgb(0xFF, 0x00, 0x00, 0xFF));
+          Paint.setColor(fill, Color.makeArgb(0xFF, 0x00, 0x00, 0x00));
           Canvas.drawPaint(canvas, fill);
 
           Paint.setColor(fill, Color.makeArgb(0xFF, 0x00, 0xFF, 0xFF));
           let rect = Rect.makeLtrb(100., 100., 540., 380.);
           Canvas.drawRect(canvas, rect, fill);
 
+          let fontStyle = FontStyle.newFontStyle(500, 20, Upright);
+          let typeface = TypeFace.createFromNameWithFontStyle("Consolas", fontStyle);
+
+          let fill2 = Paint.make();
+          Paint.setColor(fill2, Color.makeArgb(0xFF, 0xFF, 0xFF, 0xFF));
+          Paint.setTypeFace(fill2, typeface);
+          Paint.setLcdRenderText(fill2, true);
+          Paint.setAntiAlias(fill2, true);
+          Paint.setTextSize(fill2, 25.);
+
+          Canvas.drawText(canvas, "Hello, world!", 30.25, 30.25, fill2);
           Canvas.flush(canvas);
         }
     }
-    /*switch (ctx) {
-    | None => prerr_endline ("No context");
-    | Some(_) => prerr_endline ("Got context");
-    }*/
     glfwSwapBuffers(window);
   };
 
